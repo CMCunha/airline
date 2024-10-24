@@ -30,7 +30,7 @@ jobs:
         continue-on-error: true
         run: |
           token=$(curl -H "Content-Type: application/json" -X POST --data '{"client_id":"123123123123", "client_secret":"123123123123"}' "https://xray.cloud.getxray.app/api/v1/authenticate")     
-          echo "TOKEN:"+$token
+          echo "TOKEN: $token"
           curl -H "Content-Type: application/json" -X GET -H "Authorization: Bearer $token" -o "src/test/resources/airline/features.zip" "https://xray.cloud.getxray.app/api/v1/export/cucumber?keys=XEC-101"
           echo "Unzipping feature.zip file"
           cd src/test/resources/airline
