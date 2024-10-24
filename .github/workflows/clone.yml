@@ -31,7 +31,7 @@ jobs:
         run: |
           echo "Ola"
           curl --version
-          token=curl -H "Content-Type: application/json" -X POST --data '{\"client_id\":\"'+${{secrets.cloudClientId}}+'\", \"client_secret\":\"'+${{secrets.cloudClientSecret}}+'\"}' "https://xray.cloud.getxray.app/api/v1/authenticate"
+          token=$(curl -H "Content-Type: application/json" -X POST --data '{\"client_id\":\"'+${{secrets.cloudClientId}}+'\", \"client_secret\":\"'+${{secrets.cloudClientSecret}}+'\"}' "https://xray.cloud.getxray.app/api/v1/authenticate")
           authString="Authorization: Bearer "+ $token
           curl -H "Content-Type: application/json" -X GET -H $authString -o "src\test\resources\airline\features.zip" https://xray.cloud.getxray.app/api/v1/export/cucumber?keys=XEC-101    
           echo "Unzipping feature.zip file"
