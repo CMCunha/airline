@@ -29,12 +29,9 @@ jobs:
       - name: About to get feature file from Xray
         continue-on-error: true
         run: |
-          authData = '{\"client_id\":\"'+${{secrets.cloudClientId}}+'\", \"client_secret\":\"'+${{secrets.cloudClientSecret}}+'\"}'
-          echo "AuthData: " + $authData
-          token=$(curl -H "Content-Type: application/json" -X POST --data $authData "https://xray.cloud.getxray.app/api/v1/authenticate")     
-          authString="Authorization: Bearer "+ $token
-          echo "authstring:" + $authString
-          curl -H "Content-Type: application/json" -X GET -H $authString -o "src\test\resources\airline\features.zip" https://xray.cloud.getxray.app/api/v1/export/cucumber?keys=XEC-101    
+          token=$(curl -H "Content-Type: application/json" -X POST --data '{\"client_id\":\"'+${{secrets.cloudClientId}}+'\", \"client_secret\":\"'+${{secrets.cloudClientSecret}}+'\"}' "https://xray.cloud.getxray.app/api/v1/authenticate")     
+          echo "TOKEN:"+$token
+          curl -H "Content-Type: application/json" -X GET -H "Authorization: Bearer "+$token -o "src\test\resources\airline\features.zip" https://xray.cloud.getxray.app/api/v1/export/cucumber?keys=XEC-101    
           echo "Unzipping feature.zip file"
           cd src\test\resources\airline
           tar -xf features.zip
